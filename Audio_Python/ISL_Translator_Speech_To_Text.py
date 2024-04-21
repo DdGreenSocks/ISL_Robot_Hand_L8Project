@@ -4,14 +4,39 @@ import keyboard
 import time
 import whisper
 import os
+import serial
 
+ser=serial.Serial('/dev/ttyACM0',9600) # '/dev/ttyAMA0 is Arduino COM Port
+#time.sleep(10) #Wait for Arduino to initialize
 
 FRAMES_PER_BUFFER = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
 RECORD_DURATION = 2  # Duration of each recording in seconds
+EXCEPTIONS_DICTIONARY = {
 
+    "HEY": "A",
+    "SEE": "C",
+    "SEA": "C",
+    "YOU": "U",
+    "WHY": "Y",
+    "WHY?  ": "Y",
+    "EYE": "I",
+    "AYE": "I",
+    "BEE": "B",
+    "BE": "B",
+    "DEE": "D",
+    "OKAY": "K",
+    "OK": "K",
+    "ASS": "S",
+    "AS": "S",
+    "OH": "O",
+    "OH!": "O",
+    "OR": "R",
+    "PEA": "P",
+    "PEE": "P"
+}
 p = pyaudio.PyAudio()
 frames = []
 is_recording = False
@@ -76,6 +101,19 @@ def convert_audio_to_text(audio_path, model):
     return result["text"]
 
 
+def validate_result(string):
+    global EXCEPTIONS_DICTIONARY
+    sample_text = string.upper().replace('.','').strip(  )
+    if sample_text in EXCEPTIONS_DICTIONARY.keys():
+        sample_text = EXCEPTIONS_DICTIONARY[sample_text]
+    return sample_text
+
+
+def send_command(command):
+    ser.write(command.encode())
+    print(f"Sent command: {command}")
+
+
 def main(model):
     global is_recording
 
@@ -85,7 +123,9 @@ def main(model):
     if not is_recording:
         start_recording()
         text_result = convert_audio_to_text('output.wav', model)
-        print("Transcription Result:", text_result)
+        result = validate_result(text_result)
+        print("Transcription Result:", result)
+        send_command(result)
         is_recording = False
 
 
@@ -93,3 +133,4 @@ if __name__ == "__main__":
     target_model = whisper.load_model("base")  # Load the Whisper model
     while True:
         main(target_model)
+
