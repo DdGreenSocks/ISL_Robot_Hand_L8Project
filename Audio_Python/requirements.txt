@@ -1,0 +1,6 @@
+pyaudio
+wave
+keyboard
+openai-whisper
+pyserial
+RPi.GPIO

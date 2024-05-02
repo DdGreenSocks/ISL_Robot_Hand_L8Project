@@ -6,33 +6,39 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE= 16000
 
-p=pyaudio.PyAudio()
 
-stream=p.open(
+def record_mic():
+	p=pyaudio.PyAudio()
 
-format=FORMAT,
-channels=CHANNELS,
-rate=RATE,
-input=True,
-frames_per_buffer = FRAMES_PER_BUFFER
+	stream=p.open(
 
-)
+	format=FORMAT,
+	channels=CHANNELS,
+	rate=RATE,
+	input=True,
+	frames_per_buffer = FRAMES_PER_BUFFER
 
-print("start recording ")
+	)
 
-seconds= 3
-frames=[]
-for i in range (0, int (RATE/FRAMES_PER_BUFFER)*seconds):
-    data= stream.read(FRAMES_PER_BUFFER)
-    frames.append(data)
+	print("start recording ")
 
-stream.stop_stream()
-stream.close()
-p.terminate()
+	seconds= 1
+	frames=[]
+	for i in range (0, int (RATE/FRAMES_PER_BUFFER)*seconds):
+		data= stream.read(FRAMES_PER_BUFFER)
+		frames.append(data)
 
-obj = wave.open("output.wav","wb")
-obj.setnchannels(CHANNELS)
-obj.setsampwidth(p.get_sample_size(FORMAT))
-obj.setframerate(RATE)
-obj.writeframes(b"".join(frames))
-obj.close()
+	stream.stop_stream()
+	stream.close()
+	p.terminate()
+
+	obj = wave.open("output.wav","wb")
+	obj.setnchannels(CHANNELS)
+	obj.setsampwidth(p.get_sample_size(FORMAT))
+	obj.setframerate(RATE)
+	obj.writeframes(b"".join(frames))
+	obj.close()
+
+
+if __name__ == "__main__":
+    record_mic()
