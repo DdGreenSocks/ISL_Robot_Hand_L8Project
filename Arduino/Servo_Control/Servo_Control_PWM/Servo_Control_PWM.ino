@@ -11,14 +11,14 @@ void setup() {
 void loop() {
 
       //wristcenter();
-     //neutralpos(); 
+     neutralpos(); 
      //alltoopen();
      //delay(2000);
-     isl_h();
+     //isl_h();
      delay(2000);
      //alltoopen();
      //delay(2000);
-     isl_i();
+     //isl_i();
      delay(2000);
      //alltoopen();
      //delay(2000);

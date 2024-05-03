@@ -8,8 +8,10 @@ def convert_audio_to_text(audio_path, model):
 
 
 if __name__ == "__main__":
-    target_model = whisper.load_model("base")
+    target_model = whisper.load_model("tiny.en")
     while True:
+        start_time=time.time()
         convert_audio_to_text('output.wav', target_model)
         time.sleep(2)
+        print(f"Time Taken {time.time()-start_time}")
 

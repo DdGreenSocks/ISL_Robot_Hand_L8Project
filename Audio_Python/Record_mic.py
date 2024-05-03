@@ -22,7 +22,7 @@ def record_mic():
 
 	print("start recording ")
 
-	seconds= 1
+	seconds= 2
 	frames=[]
 	for i in range (0, int (RATE/FRAMES_PER_BUFFER)*seconds):
 		data= stream.read(FRAMES_PER_BUFFER)

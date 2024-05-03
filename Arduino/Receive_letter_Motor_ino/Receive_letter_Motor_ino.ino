@@ -7,76 +7,75 @@ void setup() {
   Wire.begin();
   servo.init(0x7f);
   Serial.begin(9600);
-}
+  alltoopen();
+  delay(1000);
+  isl_h();
+  delay(2000);
+  isl_i();
+  delay(2000);
+  alltoopen();
 
+}
 void loop() {
   if (Serial.available() > 0) {
     char incomingByte = Serial.read();
     Serial.println(incomingByte);
 
-    if (incomingByte == 'A') {
-      isl_a();
-      delay(2000);
-    } 
-    if (incomingByte == 'B' ) {
-      isl_b();
-      delay(2000);
-    }
-    if (incomingByte == 'D') {
-      isl_d();
-      delay(2000);
-    } 
-    if (incomingByte == 'F' ) {
-      isl_f();
-      delay(2000);
-    }
-    if (incomingByte == 'G') {
-      isl_g();
-      delay(2000);
-    } 
-    if (incomingByte == 'H' ) {
-      isl_h();
-      delay(2000);
-    }
-    if (incomingByte == 'I') {
-      isl_i();
-      delay(2000);
-    } 
-    if (incomingByte == 'K' ) {
-      isl_k();
-      delay(2000);
-    }
-     if (incomingByte == 'L' ) {
-      isl_l();
-      delay(2000);
-    }
-    if (incomingByte == 'O') {
-      isl_o();
-      delay(2000);
-    } 
-    if (incomingByte == 'P' ) {
-      isl_p();
-      delay(2000);
-    }
-      if (incomingByte == 'Q' ) {
-      isl_q();
-      delay(2000);
-    }
-    if (incomingByte == 'S') {
-      isl_s();
-      delay(2000);
-    } 
-    if (incomingByte == 'U' ) {
-      isl_u();
-      delay(2000);
-    }
-    if (incomingByte == 'Y') {
-      isl_y();
-      delay(2000);
-    } 
-    if (incomingByte == '#' ) {
-      alltoopen();
-      delay(2000);
-    }
+    switch (incomingByte) {
+          case 'A':
+            isl_a();
+            break;
+          case 'B':
+            isl_b();
+            break;
+          case 'D':
+            isl_d();
+            break;
+          case 'F':
+            isl_f();
+            break;
+          case 'G':
+            isl_g();
+            break;
+          case 'H':
+            isl_h();
+            break;
+          case 'I':
+            isl_i();
+            break;
+          case 'K':
+            isl_k();
+            break;
+          case 'L':
+            isl_l();
+            break;
+          case 'O':
+            isl_o();
+            break;
+          case 'P':
+            isl_p();
+            break;
+          case 'Q':
+            isl_q();
+            break;
+          case 'S':
+            isl_s();
+            break;
+          case 'U':
+            isl_u();
+            break;
+          case 'Y':
+            isl_y();
+            break;
+          case '#':
+            alltoopen();
+            wristcenter();
+            break;
+          default:
+            // Handle unrecognized command
+            break;
+        }
+    
+    delay(2000);
   }
 }
