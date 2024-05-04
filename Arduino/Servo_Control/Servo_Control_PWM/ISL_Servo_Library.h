@@ -16,7 +16,7 @@ void neutralpos() {
   servo.setAngle(middle_f, 90);
   servo.setAngle(index_f, 90);
   servo.setAngle(thumb_f, 90);
-  servo.setAngle(wrist, 30);
+  servo.setAngle(wrist, 115);
 }
 
 // Function to set the wrist to the center position

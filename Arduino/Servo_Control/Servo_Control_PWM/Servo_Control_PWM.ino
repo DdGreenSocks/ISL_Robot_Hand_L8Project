@@ -12,20 +12,7 @@ void loop() {
 
       //wristcenter();
      neutralpos(); 
-     //alltoopen();
-     //delay(2000);
-     //isl_h();
-     delay(2000);
-     //alltoopen();
-     //delay(2000);
-     //isl_i();
-     delay(2000);
-     //alltoopen();
-     //delay(2000);
-     //alltoclosed();
-     //delay(500);  
-     //alltoopen();
-     //delay(1000);  
+    
 }
 
 

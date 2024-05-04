@@ -175,6 +175,7 @@ def main():
             if GPIO.input(button_pin) == GPIO.HIGH:  # Check if button is pressed
                 button_pressed = button_press()  # Check if button is pressed
                 if button_pressed:
+                    ser.write(b'#')
                     ser.write(b'#')  # Send a '#' signal to indicate the start of audio recording
                     print("Say Letter")
                     record_mic()  # Record audio
