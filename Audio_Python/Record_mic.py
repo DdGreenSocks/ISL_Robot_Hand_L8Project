@@ -1,44 +1,49 @@
-import pyaudio
-import wave
+import pyaudio  # Import the PyAudio module for audio input/output
+import wave  # Import the wave module for working with audio files
 
-FRAMES_PER_BUFFER =3200
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE= 16000
-
+# Define constants for audio recording
+FRAMES_PER_BUFFER = 3200  # Number of frames per buffer
+FORMAT = pyaudio.paInt16  # Audio format
+CHANNELS = 1  # Number of audio channels
+RATE = 16000  # Sample rate
 
 def record_mic():
-	p=pyaudio.PyAudio()
+    """
+    Function to record audio from the microphone and save it to a WAV file.
+    """
+    p = pyaudio.PyAudio()  # Create a PyAudio object
 
-	stream=p.open(
+    # Open a stream for audio input
+    stream = p.open(
+        format=FORMAT,
+        channels=CHANNELS,
+        rate=RATE,
+        input=True,
+        frames_per_buffer=FRAMES_PER_BUFFER
+    )
 
-	format=FORMAT,
-	channels=CHANNELS,
-	rate=RATE,
-	input=True,
-	frames_per_buffer = FRAMES_PER_BUFFER
+    print("Start recording...")
 
-	)
+    seconds = 1  # Duration of recording (in seconds)
+    frames = []  # List to store audio frames
 
-	print("start recording ")
+    # Record audio for the specified duration
+    for i in range(0, int(RATE / FRAMES_PER_BUFFER) * seconds):
+        data = stream.read(FRAMES_PER_BUFFER)  # Read audio data from the stream
+        frames.append(data)  # Append the data to the frames list
 
-	seconds= 2
-	frames=[]
-	for i in range (0, int (RATE/FRAMES_PER_BUFFER)*seconds):
-		data= stream.read(FRAMES_PER_BUFFER)
-		frames.append(data)
+    # Stop and close the audio stream
+    stream.stop_stream()
+    stream.close()
+    p.terminate()  # Terminate the PyAudio object
 
-	stream.stop_stream()
-	stream.close()
-	p.terminate()
-
-	obj = wave.open("output.wav","wb")
-	obj.setnchannels(CHANNELS)
-	obj.setsampwidth(p.get_sample_size(FORMAT))
-	obj.setframerate(RATE)
-	obj.writeframes(b"".join(frames))
-	obj.close()
-
+    # Save the recorded audio to a WAV file
+    obj = wave.open("output.wav", "wb")
+    obj.setnchannels(CHANNELS)
+    obj.setsampwidth(p.get_sample_size(FORMAT))
+    obj.setframerate(RATE)
+    obj.writeframes(b"".join(frames))
+    obj.close()
 
 if __name__ == "__main__":
-    record_mic()
+    record_mic()  # Call the record_mic function to record audio
